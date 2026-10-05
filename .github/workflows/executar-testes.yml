@@ -20,8 +20,8 @@ jobs:
           java -version
           mvn -version
           google-chrome --version
-      - name: Conferir os cinco casos de cadastro
-        run: mvn --batch-mode --no-transfer-progress clean test -Dheadless=true -Dtest=RegistrarUsuarioTest
+      - name: Executar os dez testes
+        run: mvn --batch-mode --no-transfer-progress clean test -Dheadless=true
       - name: Guardar relatórios
         if: always()
         uses: actions/upload-artifact@v4

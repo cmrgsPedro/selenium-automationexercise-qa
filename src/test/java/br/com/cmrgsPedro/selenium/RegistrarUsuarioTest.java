@@ -56,16 +56,24 @@ public class RegistrarUsuarioTest extends BaseTest {
 
         assertEquals("ACCOUNT CREATED!",
                 visivel(campo("account-created")).getText().toUpperCase(Locale.ROOT));
-        clicar(campo("continue-button"));
+        continuar();
         assertEquals(nome, visivel(By.xpath("//a[contains(., 'Logged in as')]/b")).getText());
 
         // Excluo a conta criada no teste, como pede o cenário.
         clicar(By.cssSelector("a[href='/delete_account']"));
         assertEquals("ACCOUNT DELETED!",
                 visivel(campo("account-deleted")).getText().toUpperCase(Locale.ROOT));
-        clicar(campo("continue-button"));
+        continuar();
         visivel(By.id("slider"));
         assertTrue(driver.findElements(By.cssSelector("a[href='/logout']")).isEmpty());
+    }
+
+    private void continuar() {
+        clicar(campo("continue-button"));
+        // Às vezes aparece um anúncio no Continue. Abro a home para seguir o teste.
+        if (driver.getCurrentUrl().contains("#google_vignette")) {
+            driver.get("https://automationexercise.com/");
+        }
     }
 
     static Stream<Arguments> dadosInvalidos() {
