@@ -61,10 +61,28 @@ R04 e R05 ficam na primeira etapa do cadastro. O teste verifica `valueMissing` n
 
 Os campos iniciais de nome, e-mail e senha de login têm preenchimento obrigatório. Os e-mails também precisam passar pela validação de formato do navegador. Esses campos não declaram `minlength` ou `maxlength`, por isso a análise usa a fronteira entre campo vazio e preenchido. Não foi definido um limite máximo sem uma regra do site que o informe.
 
-Os casos com um e dois caracteres verificam o comportamento esperado nessa fronteira. No login, preencher a senha permite enviar o formulário, mas as credenciais continuam incorretas. No cadastro, a expectativa é que nomes não vazios sejam aceitos. Os resultados ainda precisam ser confirmados na execução.
+Os casos com um e dois caracteres verificam o comportamento esperado nessa fronteira. No login, preencher a senha permite enviar o formulário, mas as credenciais continuam incorretas. No cadastro, a expectativa é que nomes não vazios sejam aceitos. Os resultados dessa verificação estão registrados abaixo.
 
 ## Conferência dos resultados
 
 Após executar `mvn clean test`, conferir os relatórios em `target/surefire-reports/`. O total esperado é dez testes. Um caso passa quando todas as suas verificações passam; se houver falha, registrar o caso e a diferença entre o resultado esperado e o observado. Problemas de navegador, rede ou espera também precisam ser conferidos antes de concluir que há um defeito no site.
 
 Referência: [Test Cases 1 e 3](https://automationexercise.com/test_cases).
+
+## Resultado da execução
+
+Execução em 05/10/2026, concluída às 19h41 (horário de Brasília), pelo GitHub Actions.
+
+| Funcionalidade | Testes executados | Aprovados | Falhas | Erros | Ignorados |
+| --- | --- | --- | --- | --- | --- |
+| Login | 5 | 5 | 0 | 0 | 0 |
+| Cadastro | 5 | 5 | 0 | 0 | 0 |
+| Total | 10 | 10 | 0 | 0 | 0 |
+
+Os três cadastros válidos confirmaram a criação, o nome do usuário conectado e a exclusão da conta. Os dois cadastros inválidos ficaram bloqueados no formulário inicial.
+
+Nas primeiras tentativas, um anúncio do Google interrompeu a navegação depois de alguns cliques. O método `clicar` passou a seguir o endereço do próprio link quando a URL contém `#google_vignette`. Depois desse ajuste, a suíte completa passou.
+
+Ambiente: Ubuntu 24.04, Java Temurin 17.0.20.1, Maven 3.9.16 e Chrome 154.0.8037.57. O comando foi `mvn --batch-mode --no-transfer-progress clean test -Dheadless=true`.
+
+[Execução aprovada e relatórios](https://github.com/cmrgsPedro/selenium-automationexercise-qa/actions/runs/37383977200). O código testado está no commit `9bc6e5bcb9188f24dc92825c3ad41d6891939225`, na branch `executar-testes`. Essa branch inclui a configuração de execução e a gravação das páginas para diagnóstico. A versão de entrega na `main` mantém os mesmos dez casos e o ajuste de navegação.

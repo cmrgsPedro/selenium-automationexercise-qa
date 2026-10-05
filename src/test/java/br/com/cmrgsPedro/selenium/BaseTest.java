@@ -54,7 +54,12 @@ public class BaseTest {
         WebElement elemento = visivel(seletor);
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({block:'center'});", elemento);
+        String destino = elemento.getDomProperty("href");
         wait.until(ExpectedConditions.elementToBeClickable(seletor)).click();
+        // Se um anúncio bloquear o link, sigo para o endereço dele.
+        if (destino != null && driver.getCurrentUrl().contains("#google_vignette")) {
+            driver.get(destino);
+        }
     }
 
     protected String novoEmail() {

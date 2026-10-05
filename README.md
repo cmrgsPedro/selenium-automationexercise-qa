@@ -39,6 +39,8 @@ Cada teste abre um navegador novo. Os e-mails são gerados com UUID para evitar 
 
 ## Verificação
 
-Os três arquivos Java compilaram sem erros usando Eclipse Compiler for Java, com as bibliotecas do projeto. A execução completa dos dez testes no site ainda está pendente.
+Os dez testes foram executados no GitHub Actions em 05/10/2026, com Java 17 e Chrome. Todos passaram, sem falhas, erros ou testes ignorados. O resultado está nesta [execução](https://github.com/cmrgsPedro/selenium-automationexercise-qa/actions/runs/37383977200).
+
+Durante a verificação, um anúncio do Google bloqueou alguns links. O método de clique foi ajustado para seguir o endereço do próprio link quando aparece `#google_vignette`. O cadastro continua verificando a criação da conta, o usuário conectado e a exclusão.
 
 Referência dos cenários: [Test Cases do Automation Exercise](https://automationexercise.com/test_cases).
