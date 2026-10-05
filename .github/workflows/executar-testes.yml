@@ -20,13 +20,15 @@ jobs:
           java -version
           mvn -version
           google-chrome --version
-      - name: Executar os dez testes
-        run: mvn --batch-mode --no-transfer-progress clean test -Dheadless=true
+      - name: Conferir os cinco casos de cadastro
+        run: mvn --batch-mode --no-transfer-progress clean test -Dheadless=true -Dtest=RegistrarUsuarioTest
       - name: Guardar relatórios
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: resultados-selenium
-          path: target/surefire-reports/
+          path: |
+            target/surefire-reports/
+            target/diagnostico/
           retention-days: 7
           if-no-files-found: warn

@@ -1,6 +1,11 @@
 package br.com.cmrgsPedro.selenium;
 
 import java.time.Duration;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.junit.jupiter.api.TestInfo;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,9 +73,21 @@ public class BaseTest {
     }
 
     @AfterEach
-    public void fecharNavegador() {
+    public void fecharNavegador(TestInfo info) {
         if (driver != null) {
-            driver.quit();
+            try {
+                Path pasta = Path.of("target", "diagnostico");
+                Files.createDirectories(pasta);
+                String nome = info.getDisplayName().replaceAll("[^a-zA-Z0-9_-]", "_");
+                System.out.println("Página ao terminar " + info.getDisplayName() + ": " + driver.getCurrentUrl());
+                Files.writeString(pasta.resolve(nome + ".html"), driver.getPageSource());
+                Files.write(pasta.resolve(nome + ".png"),
+                        ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES));
+            } catch (Exception e) {
+                System.err.println("Erro ao salvar a página: " + e.getMessage());
+            } finally {
+                driver.quit();
+            }
         }
     }
 }
